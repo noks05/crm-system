@@ -1165,6 +1165,10 @@ input {
   padding: 22px 87px 25px;
 }
 
+.modal-client_visibly .modal-client__card_delete {
+  transform: translateY(-50%);
+}
+
 .form-delete {
   max-width: 450px;
 }
