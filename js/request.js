@@ -3,7 +3,6 @@
   const methodsClient = {
     // сохраняем созданного клиента
     onSave: async function (data) {
-      // const response = await fetch('https://192.168.0.101:3000/api/clients',
       const response = await fetch('https://polar-tor-74956.herokuapp.com/api/clients',
         {
           method: 'POST',
@@ -14,7 +13,6 @@
     },
     // изменяем данные клиента
     onChange: async function (data, id) {
-      // const response = await fetch('https://192.168.0.101:3000/api/clients/' + id,
       const response = await fetch('https://polar-tor-74956.herokuapp.com/api/clients/' + id,
         {
           method: 'PATCH',
@@ -27,7 +25,6 @@
     getDataClients: async function () {
       const {loader,table} = addLoaderToTable();
       const dataClients = await fetch('https://polar-tor-74956.herokuapp.com/api/clients');
-      // const dataClients = await fetch('https://192.168.0.101:3000/api/clients');
       const clients = await dataClients.json();
       setTimeout(()=> {
         loader.remove();
@@ -39,20 +36,16 @@
     // получаем данные одного клиента по строке
     getSearchClients: async function (searchStr) {
       const clientsData = await fetch('https://polar-tor-74956.herokuapp.com/api/clients?search=' + searchStr);
-      // const clientsData = await fetch('https://192.168.0.101:3000/api/clients?search=' + searchStr);
-      const clients = await clientsData.json();
       return clients;
     },
     // получаем данные одного клиента по id
     getClient: async function (id) {
       const clientData = await fetch('https://polar-tor-74956.herokuapp.com/api/clients/' + id);
-      // const clientData = await fetch('https://192.168.0.101:3000/api/clients/' + id);
       const client = await clientData.json();
       return client;
     },
     // удаляем данные клиента
     onDelete: async function (id) {
-      // const response = await fetch('https://192.168.0.101:3000/api/clients/' + id,
       const response = await fetch('https://polar-tor-74956.herokuapp.com/api/clients/' + id,
         {
           method: 'DELETE',

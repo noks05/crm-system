@@ -72,7 +72,7 @@
       const loader = createLoader();
       input.parentNode.parentNode.append(loader);
       const clients = await getSearchClients(textInput);
-      setTimeout(()=>loader.remove());
+      loader.remove();
 
       if (clients.length === 0) {
         // добавляем красный border у поля
@@ -709,14 +709,10 @@
           const domain = location.href.split('#')[0];
           location.href = domain + '#' + id;
           const client = await methodsClient.getClient(id);
-          // таймер временно - для нагляности
           // удаляем колесо загрузки у кнопки
-          // btn.classList.remove('active')
-          setTimeout(() => btn.classList.remove('active'), 500);
-          // таймер временно - для нагляности
+          btn.classList.remove('active');
           // создаём модальное окно с формой
-          // createModalWithForm(client, methodsClient, nameColumns);
-          setTimeout(() => createModalWithForm(client, methodsClient), 500)
+          createModalWithForm(client, methodsClient, nameColumns);
         })
       } else {
         btn.addEventListener('click', async () => {
@@ -868,10 +864,8 @@
         return;
       }
       // таймер временно - дял наглядности
-      // loader.remove();
-      // modalElement.remove();
-      setTimeout(() => loader.remove(), 500);
-      setTimeout(() => modalElement.remove(), 500);
+      loader.remove();
+      modalElement.remove();
 
       // перерисовываем заного тбалицу
       replaceTbody(await getDataClients());
@@ -1463,13 +1457,10 @@
       const id = e.currentTarget.nextSibling.value;
       await onDelete(id);
       // временно таймер
-      setTimeout(() => loader.remove(), 500);
-      // loader.remove();
+      loader.remove();
       // перерисовываем заного таблицу
       replaceTbody(await getDataClients());
-      // modalWindow.remove();
-      setTimeout(() => modalWindow.remove(), 500);
-
+      modalWindow.remove();
     })
     btns.btnDown.addEventListener('click', () => {
       modalWindow.remove();
@@ -1488,7 +1479,7 @@
 
     wrapper.append(modalWindow);
     // анимация появления модального окна
-    setTimeout(() => modalWindow.style.opacity = '100%', 10);
+    setTimeout(() => modalWindow.classList.add('modal-client_visibly'), 10);
   }
 
   // сообщение о том что клиент уже удален при попытке загрузить его данные по ссылке
