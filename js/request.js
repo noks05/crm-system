@@ -36,6 +36,7 @@
     // получаем данные одного клиента по строке
     getSearchClients: async function (searchStr) {
       const clientsData = await fetch('https://polar-tor-74956.herokuapp.com/api/clients?search=' + searchStr);
+      const clients = await clientsData.json();
       return clients;
     },
     // получаем данные одного клиента по id

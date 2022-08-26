@@ -62,10 +62,10 @@
 
       const textInput = input.value.trim();
       // получаем ссылку на старый список для удаления
-      const autocomplete = document.querySelector('.autocomplete');
+      let autocompletes = document.querySelectorAll('.autocomplete');
       if (textInput === '') {
         // удаляем старый список
-        if (autocomplete) autocomplete.remove();
+        deleteAutocomplete(autocompletes, true);
         return;
       }
       // найти клиентов в  базе по искомой строке
@@ -77,7 +77,8 @@
       if (clients.length === 0) {
         // добавляем красный border у поля
         input.classList.add('search__input_not-found');
-        if (autocomplete) autocomplete.remove();
+        // удаляем старый список
+        deleteAutocomplete(autocompletes, true);
         return;
       }
       // получаем совпадения
@@ -87,7 +88,11 @@
       let autoCompleteList = createListAutoComplete(valueAutocomlete);
       input.parentNode.append(autoCompleteList);
       // удаляем предидущий список автодополнений
-      if (autocomplete) autocomplete.remove();
+      // if (autocompletes) autocompletes.remove();
+      // получаем ссылку на старый список для удаления
+      autocompletes = document.querySelectorAll('.autocomplete');
+      // удаляем старый список
+      deleteAutocomplete(autocompletes);
     });
 
     head.append(logo);
@@ -96,6 +101,16 @@
     form.append(input);
 
     return head;
+  }
+  // удаляем список автодополнения
+  function deleteAutocomplete(autocompletes, fullDeleted) {
+    autocompletes.forEach((it, index,arr) => {
+
+      const result = fullDeleted || (index !== (arr.length - 1));
+
+      if (result) it.remove();
+    });
+    return;
   }
   // переключаем элемент в списке автодополнения
   function moveElemOnAutocomlete(dir) {
@@ -246,7 +261,7 @@
   function scrollToClient(item) {
     const link = item.childNodes[0];
     const id = link.href.split('#')[1];
-    const client = document.getElementById('' + id);
+    const client = document.querySelector(`tr[data-id="${id}"]`);
 
     const clients = document.querySelectorAll('.table__row');
     // удаляем все предыдущие выделения
@@ -513,7 +528,7 @@
     // создаём ряд-элемент таблицы
     const row = document.createElement('tr');
     row.classList.add('table__row');
-    row.id = id;
+    row.setAttribute('data-id',id);
     // создаём один ряд ячеек
     nameColumns.forEach((nameCol) => {
       const cellBody = document.createElement('td');
@@ -705,8 +720,8 @@
           // получаем id из скрытого input
           const id = btn.parentNode.nextSibling.value;
           // удаляем id из hash части url страницы
-          // добавляем id в хэш параметры url
           const domain = location.href.split('#')[0];
+          // добавляем id в хэш параметры url
           location.href = domain + '#' + id;
           const client = await methodsClient.getClient(id);
           // удаляем колесо загрузки у кнопки
