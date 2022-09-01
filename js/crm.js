@@ -719,10 +719,6 @@
           btn.classList.add('active');
           // получаем id из скрытого input
           const id = btn.parentNode.nextSibling.value;
-          // удаляем id из hash части url страницы
-          const domain = location.href.split('#')[0];
-          // добавляем id в хэш параметры url
-          location.href = domain + '#' + id;
           const client = await methodsClient.getClient(id);
           // удаляем колесо загрузки у кнопки
           btn.classList.remove('active');
@@ -908,6 +904,7 @@
         input.value.split(' ')
           .map(str => str.trim())
           .filter(text => text.length > 0)
+          .map(str => str[0].toUpperCase() + str.slice(1))
           .join('');
     })
     return client;
@@ -1015,7 +1012,7 @@
       if (client) {
         input.classList.add('active');
         const namePart = client[namesInput[i]];
-        input.value = (namePart[0] && namePart[0].toUpperCase() || '') + namePart.slice(1);
+        input.value = namePart[0] && namePart || '';
         input.addEventListener('input', () => {
           input.classList.add('change');
         });
