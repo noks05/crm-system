@@ -1575,6 +1575,16 @@
 
   // создание CRM системы
   async function createCrmSystem(nameColumns, methodsClient) {
+
+    window.addEventListener('hashchange', () => {
+      const students = document.querySelectorAll('.table__row')
+      students.forEach(student => {
+        if (Number(student.id) === Number(location.hash.slice(1))) {
+          student.style.outline = '2px solid black'
+        }
+      })
+    })
+
     const wrapper = document.querySelector('.wrapper');
     const container = document.querySelector('.container');
     // убираем по клику все раскрывающиеся списки
