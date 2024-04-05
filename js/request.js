@@ -24,7 +24,7 @@
     // получаем данные клиентов
     getDataClients: async function () {
       const { loader, table } = addLoaderToTable();
-      const dataClients = await fetch('https://jsonplaceholder.typicode.com/users');
+      const dataClients = await fetch('https://mocki.io/v1/16cbcc15-de82-423d-b5f8-ab042d932d54');
       const clients = await dataClients.json();
       console.log(clients)
       setTimeout(() => {
@@ -36,19 +36,21 @@
     },
     // получаем данные одного клиента по строке
     getSearchClients: async function (searchStr) {
-      const clientsData = await fetch('https://jsonplaceholder.typicode.com/users?search=' + searchStr);
+      const clientsData = await fetch('https://mocki.io/v1/16cbcc15-de82-423d-b5f8-ab042d932d54?search=' + searchStr);
       const clients = await clientsData.json();
       return clients;
     },
     // получаем данные одного клиента по id
     getClient: async function (id) {
-      const clientData = await fetch('https://jsonplaceholder.typicode.com/users' + id);
-      const client = await clientData.json();
-      return client;
+      const clientsData = await fetch('https://mocki.io/v1/16cbcc15-de82-423d-b5f8-ab042d932d54');
+      const clients = await clientsData.json();
+      const findClient = clients.find(obj => obj.id === id)
+      console.log(findClient)
+      return findClient;
     },
     // удаляем данные клиента
     onDelete: async function (id) {
-      const response = await fetch('https://jsonplaceholder.typicode.com/users' + id,
+      const response = await fetch('https://mocki.io/v1/16cbcc15-de82-423d-b5f8-ab042d932d54' + id,
         {
           method: 'DELETE',
         });
