@@ -3,7 +3,7 @@
   const methodsClient = {
     // сохраняем созданного клиента
     onSave: async function (data) {
-      const response = await fetch('http://localhost:3000/api/clients',
+      const response = await fetch('https://jsonplaceholder.typicode.com/users',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -13,7 +13,7 @@
     },
     // изменяем данные клиента
     onChange: async function (data, id) {
-      const response = await fetch('http://localhost:3000/api/clients/' + id,
+      const response = await fetch('https://jsonplaceholder.typicode.com/users' + id,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -23,10 +23,11 @@
     },
     // получаем данные клиентов
     getDataClients: async function () {
-      const {loader,table} = addLoaderToTable();
-      const dataClients = await fetch('http://localhost:3000/api/clients');
+      const { loader, table } = addLoaderToTable();
+      const dataClients = await fetch('https://jsonplaceholder.typicode.com/users');
       const clients = await dataClients.json();
-      setTimeout(()=> {
+      console.log(clients)
+      setTimeout(() => {
         loader.remove();
         table.classList.remove('loading');
       }, 500);
@@ -35,19 +36,19 @@
     },
     // получаем данные одного клиента по строке
     getSearchClients: async function (searchStr) {
-      const clientsData = await fetch('http://localhost:3000/api/clients?search=' + searchStr);
+      const clientsData = await fetch('https://jsonplaceholder.typicode.com/users?search=' + searchStr);
       const clients = await clientsData.json();
       return clients;
     },
     // получаем данные одного клиента по id
     getClient: async function (id) {
-      const clientData = await fetch('http://localhost:3000/api/clients/' + id);
+      const clientData = await fetch('https://jsonplaceholder.typicode.com/users' + id);
       const client = await clientData.json();
       return client;
     },
     // удаляем данные клиента
     onDelete: async function (id) {
-      const response = await fetch('http://localhost:3000/api/clients/' + id,
+      const response = await fetch('https://jsonplaceholder.typicode.com/users' + id,
         {
           method: 'DELETE',
         });
